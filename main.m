@@ -14,6 +14,6 @@ plot(mic(:,1),'r')
 hold on
 plot(mic(:,2),'b')
 
-soundsc(mic(:,1),fs_RIR)
+% soundsc(mic(:,1),fs_RIR)
 
 
