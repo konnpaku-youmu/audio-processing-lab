@@ -38,7 +38,7 @@ toc
 binaural_sig_conv = [conv_L conv_R];
 
 %OLA
-nfft = 1024;% nfft should be larger than Lh
+nfft = 4096;% nfft should be larger than Lh
 disp('OLA: ')
 tic
 OLA_L = OLA_skeleton(speech1,HRTF_estimated_left ,nfft);
@@ -47,5 +47,5 @@ toc
 binaural_sig_OLA = [OLA_L,OLA_R];
 
 soundsc(binaural_sig_conv,fs_new)
-soundsc(binaural_sig_OLA,fs_new)
+% soundsc(binaural_sig_OLA,fs_new)
 

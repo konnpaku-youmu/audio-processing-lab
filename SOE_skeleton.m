@@ -117,7 +117,7 @@ HRTF_estimated_right = HRTF_estimated(floor(numel(HRTF_estimated)/2)+1:end);
 speech1_left  = fftfilt(HRTF_estimated_left,speech1);
 speech1_right = fftfilt(HRTF_estimated_right,speech1);
 binaural_sig  = [speech1_left,speech1_right];
-soundsc(binaural_sig,fs_new)
+% soundsc(binaural_sig,fs_new)
 
 %synthesized with x
 HRTF_actual       = x;
@@ -127,7 +127,7 @@ HRTF_actual_right = HRTF_actual(floor(numel(HRTF_actual)/2)+1:end);
 speech1_left  = fftfilt(HRTF_actual_left,speech1);
 speech1_right = fftfilt(HRTF_actual_right,speech1);
 binaural_sig_synth_x  = [speech1_left,speech1_right];
-soundsc(binaural_sig_synth_x,fs_new)
+% soundsc(binaural_sig_synth_x,fs_new)
 
 synth_error=norm(binaural_sig-binaural_sig_synth_x);
 disp('compare binaural synthesized by actual and estimated HRTF:')
@@ -162,10 +162,10 @@ binaural_sig2 = binaural_sig2_1 + binaural_sig2_2;
 binaural_sig3 = binaural_sig3_1 + binaural_sig3_2;
 binaural_sig4 = binaural_sig4_1 + binaural_sig4_2;
 
-soundsc(binaural_sig1,fs_new)
-soundsc(binaural_sig2,fs_new)
-soundsc(binaural_sig3,fs_new)
-soundsc(binaural_sig4,fs_new)
+% soundsc(binaural_sig1,fs_new)
+% soundsc(binaural_sig2,fs_new)
+% soundsc(binaural_sig3,fs_new)
+% soundsc(binaural_sig4,fs_new)
 
 %% 1.4.10
 load Computed_RIRs.mat
