@@ -2,21 +2,50 @@ close all
 clear
 clc
 
+load filtre_Hg
+g = reshape(g, [], 5);
+
 fs_new = 8000;
-mic_length = 2;
+mic_length = 5;
 L = mic_length * fs_new;
 
 [speech1,fs] = audioread('../audio files/speech1.wav');
 speech1      = resample(speech1, fs_new, fs);
-x1 = speech1(1:L);
+speech1 = speech1(1:L);
 
 % [speech2,fs] = audioread('../audio files/speech2.wav');
 % speech2      = resample(speech2, fs_new, fs);
 % x2 = speech2(1:L);
 
-h = [1, zeros(1, 99)];
-nfft = 2048;
+%% Dirac réponse impulsionnelle
+nfft = 4096;
 
+h = zeros(100, 1);
+h(1) = 1;
 
+y = OLA(speech1, h, nfft);
 
+% plot(y);
+
+%% Tester sur HRTF
+g = g(:);
+hrtf = reshape(H*g, [], 2);
+
+% Synthèse par convolution
+tic;
+speech_conv_l = conv(speech1, hrtf(:, 1), 'same');
+speech_conv_r = conv(speech1, hrtf(:, 2), 'same');
+toc;
+speech_conv_bin = [speech_conv_l, speech_conv_r];
+
+% Synthèse par OLA
+tic;
+speech_ola_l = OLA(speech1, hrtf(:, 1), nfft);
+speech_ola_r = OLA(speech1, hrtf(:, 2), nfft);
+toc;
+speech_ola_bin = [speech_ola_l, speech_ola_r];
+
+% % écouter les signals
+% soundsc(speech_ola_bin, fs_new); pause;
+% soundsc(speech_conv_bin, fs_new);
 

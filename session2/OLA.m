@@ -51,4 +51,6 @@ while istart <= nx
     istart = istart + Lx;
 end
 
+y = y(1:nx);
+
 end

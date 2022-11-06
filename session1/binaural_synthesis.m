@@ -5,26 +5,29 @@ clc
 load("HRTF.mat");
 
 fs_new = 8000;
-mic_length = 2;
+mic_length = 5;
 L = mic_length * fs_new;
 
-[speech1,fs] = audioread('audio files/speech1.wav');
+[speech1,fs] = audioread('../audio files/speech1.wav');
 speech1      = resample(speech1, fs_new, fs);
 x1 = speech1(1:L);
 
-[speech2,fs] = audioread('audio files/speech2.wav');
+[speech2,fs] = audioread('../audio files/speech2.wav');
 speech2      = resample(speech2, fs_new, fs);
 x2 = speech2(1:L);
 
 [bin_sig1_1, bin_sig2_1, bin_sig3_1, bin_sig4_1] = generate_binaural(x1, HRTF);
 [bin_sig1_2, bin_sig2_2, bin_sig3_2, bin_sig4_2] = generate_binaural(x2, HRTF);
 
-bin_sig1 = bin_sig1_1 + fliplr(bin_sig1_2);
-bin_sig2 = bin_sig2_1 + fliplr(bin_sig2_2);
-bin_sig3 = bin_sig3_1 + fliplr(bin_sig3_2);
-bin_sig4 = bin_sig4_1 + fliplr(bin_sig4_2);
+bin_sig1 = bin_sig1_1 + 0*fliplr(bin_sig1_2);
+bin_sig2 = bin_sig2_1 + 0*fliplr(bin_sig2_2);
+bin_sig3 = bin_sig3_1 + 0*fliplr(bin_sig3_2);
+bin_sig4 = bin_sig4_1 + 0*fliplr(bin_sig4_2);
 
-soundsc(bin_sig4, 8000);
+% soundsc(bin_sig1, fs_new);pause;
+% soundsc(bin_sig2, fs_new);pause;
+% soundsc(bin_sig3, fs_new);pause;
+soundsc(bin_sig4, fs_new);
 
 function [sig1, sig2, sig3, sig4] = generate_binaural(sig_org, hrtf)
     sig1 = [sig_org, sig_org];

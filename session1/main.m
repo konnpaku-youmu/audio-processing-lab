@@ -2,9 +2,9 @@ close all
 clear
 
 load('Computed_RIRs.mat');
-speechfilename{1} = 'audio files/speech1.wav';
+speechfilename{1} = '../audio files/speech1.wav';
 %speechfilename{2} = 'audio files/speech2.wav';
-noisefilename{1}  = 'audio files/Babble_noise1.wav';
+noisefilename{1}  = '../audio files/Babble_noise1.wav';
 
 mic_length = 10; % desired length of microphone signals in Sec
 mic_num = size(RIR_sources,2);
