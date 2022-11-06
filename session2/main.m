@@ -13,10 +13,6 @@ L = mic_length * fs_new;
 speech1      = resample(speech1, fs_new, fs);
 speech1 = speech1(1:L);
 
-% [speech2,fs] = audioread('../audio files/speech2.wav');
-% speech2      = resample(speech2, fs_new, fs);
-% x2 = speech2(1:L);
-
 %% Dirac réponse impulsionnelle
 nfft = 4096;
 
@@ -50,5 +46,8 @@ speech_ola_bin = [speech_ola_l, speech_ola_r];
 % soundsc(speech_conv_bin, fs_new);
 
 %% WOLA
-window = [];
-[X, f] = WOLA_analysis(speech1, fs_new, window, nfft, 2);
+speech1_multichan = repmat(speech1, 1, 5);
+window = hamming(nfft);
+[X, f] = WOLA_analysis(speech1_multichan, fs_new, window, nfft, 2);
+
+x = WOLA_synthesis(X, window, nfft, 2);

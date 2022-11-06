@@ -43,6 +43,7 @@ for m = 0:M-1
         % Appliquer le fenetrage au le signal
         x_win = x(start:fin, m+1) .* window;
         X_win = fft(x_win, nfft);
+        X(:, l+1, m+1) = X_win(1:N_half);
     end
 end
 
