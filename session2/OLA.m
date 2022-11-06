@@ -42,7 +42,7 @@ while istart <= nx
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Section of code to complete (5 - 10 lines) %
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    if(istart+Lx-1 < nx)
+    if(istart+Lx-1 <= nx)
         eind_x = istart+Lx-1;
     else
         eind_x = nx;

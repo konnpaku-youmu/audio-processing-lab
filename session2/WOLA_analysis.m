@@ -28,9 +28,9 @@ N_half = nfft / 2 + 1;
 f = 0:(fs / 2) / (N_half - 1):fs / 2;
 
 % init
-L = floor((length(x) - nfft + (nfft / noverlap)) / (nfft / noverlap));
-M = size(x,2);
-X = zeros(N_half, L, M);
+L = floor((length(x) - nfft + (nfft / noverlap)) / (nfft / noverlap)); % nombre de trames des STFT
+M = size(x,2); % Nombre de canaux de signal
+X = zeros(N_half, L, M); % Résultat de STFT
 
 for m = 0:M-1
     for l = 0:L-1 % Frame index
@@ -38,7 +38,11 @@ for m = 0:M-1
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         % Section of code to complete (3 - 5 lines) %
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+        start = l * (nfft - nfft / noverlap) + 1;
+        fin = start + nfft - 1;
+        % Appliquer le fenetrage au le signal
+        x_win = x(start:fin, m+1) .* window;
+        X_win = fft(x_win, nfft);
     end
 end
 

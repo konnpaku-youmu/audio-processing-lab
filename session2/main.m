@@ -6,7 +6,7 @@ load filtre_Hg
 g = reshape(g, [], 5);
 
 fs_new = 8000;
-mic_length = 5;
+mic_length = 10;
 L = mic_length * fs_new;
 
 [speech1,fs] = audioread('../audio files/speech1.wav');
@@ -49,3 +49,6 @@ speech_ola_bin = [speech_ola_l, speech_ola_r];
 % soundsc(speech_ola_bin, fs_new); pause;
 % soundsc(speech_conv_bin, fs_new);
 
+%% WOLA
+window = [];
+[X, f] = WOLA_analysis(speech1, fs_new, window, nfft, 2);
