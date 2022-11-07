@@ -17,7 +17,7 @@ nfft = 2048;
 win_analysis  = sqrt(hann(nfft,'periodic'));
 win_synthesis = sqrt(hann(nfft,'periodic'));
 x = speech1;
-x = repmat(x,1,5);
+% x = repmat(x,1,5);
 
 [X,f] = WOLA_analysis_skeleton(x,fs_new,win_analysis,nfft,noverlap,g);
 
