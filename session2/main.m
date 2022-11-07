@@ -2,7 +2,8 @@ close all
 clear
 clc
 
-load filtre_Hg
+load ../session1/Computed_RIRs.mat
+load ../session1/filtre_Hg.mat
 g = reshape(g, [], 5);
 
 fs_new = 8000;
@@ -21,11 +22,9 @@ h(1) = 1;
 
 y = OLA(speech1, h, nfft);
 
-% plot(y);
-
 %% Tester sur HRTF
-g = g(:);
-hrtf = reshape(H*g, [], 2);
+g_col = g(:);
+hrtf = reshape(H*g_col, [], 2);
 
 % Synthèse par convolution
 tic;
@@ -47,7 +46,20 @@ speech_ola_bin = [speech_ola_l, speech_ola_r];
 
 %% WOLA
 speech1_multichan = repmat(speech1, 1, 5);
-window = hamming(nfft);
-[X, f] = WOLA_analysis(speech1_multichan, fs_new, window, nfft, 2);
+window = hann(nfft);
+[X, f] = WOLA_analysis(speech1_multichan, fs_new, window, nfft, 2, g);
+x_WOLA = WOLA_synthesis(X, window, nfft, 2);
 
-x = WOLA_synthesis(X, window, nfft, 2);
+J = size(RIR_sources, 3);
+
+x_left = zeros(size(x_WOLA));
+x_right = zeros(size(x_WOLA));
+
+for j=1:J
+    x_left(:, j) = OLA(x_WOLA(:, j), RIR_sources(:, 1, j), nfft);
+    x_right(:, j) = OLA(x_WOLA(:, j), RIR_sources(:, 2, j), nfft);
+end
+
+speech_bin_WOLA = [mean(x_left, 2), mean(x_right, 2)];
+
+soundsc(speech_bin_WOLA, fs_new);

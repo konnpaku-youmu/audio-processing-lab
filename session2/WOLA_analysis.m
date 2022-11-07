@@ -7,7 +7,7 @@
 % complete
 
 
-function [X,f] = WOLA_analysis(x,fs,window,nfft,noverlap)
+function [X,f] = WOLA_analysis(x,fs,window,nfft,noverlap, g)
 %WOLA_analysis  short-time fourier transform
 % INPUT:
 %   x           : input time signal(s) (samples x channels)
@@ -15,6 +15,7 @@ function [X,f] = WOLA_analysis(x,fs,window,nfft,noverlap)
 %   window      : window function
 %   nfft        : FFT size
 %   noverlap    : frame overlap; default: 2 (50%)
+%   g           : filter
 %
 % OUTPUT:
 %   X           : STFT matrix (bins x frames x channels)
@@ -32,6 +33,8 @@ L = floor((length(x) - nfft + (nfft / noverlap)) / (nfft / noverlap)); % nombre 
 M = size(x,2); % Nombre de canaux de signal
 X = zeros(N_half, L, M); % Résultat de STFT
 
+G = fft(g, nfft);
+
 for m = 0:M-1
     for l = 0:L-1 % Frame index
 
@@ -43,7 +46,8 @@ for m = 0:M-1
         % Appliquer le fenetrage au le signal
         x_win = x(start:fin, m+1) .* window;
         X_win = fft(x_win, nfft);
-        X(:, l+1, m+1) = X_win(1:N_half);
+        X_win_filt = X_win .* G(:, m+1);
+        X(:, l+1, m+1) = X_win_filt(1:N_half);
     end
 end
 
