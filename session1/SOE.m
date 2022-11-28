@@ -42,7 +42,8 @@ Lg = ceil(2*(Lh-1)/(J-2)); % Durée de filtre g, optimal
 RIR_sources = RIR_sources(1:Lh, :, :);
 
 % Calculate delay for SOE
-delta = ceil(sqrt((m_pos(2, 1) - s_pos(2, 1))^2+(m_pos(2, 2) - s_pos(2, 2))^2)*fs_RIR/340);
+% delta = ceil(sqrt((m_pos(2, 1) - s_pos(2, 1))^2+(m_pos(2, 2) - s_pos(2, 2))^2)*fs_RIR/340);
+delta = ceil(norm(room_dim, 2) * fs_RIR  / 340);
 
 % Define the Toeplitz matrices for left and right ear (left side of SOE)
 HL=[];

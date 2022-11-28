@@ -61,5 +61,4 @@ for j=1:J
 end
 
 speech_bin_WOLA = [mean(x_left, 2), mean(x_right, 2)];
-
 soundsc(speech_bin_WOLA, fs_new);
