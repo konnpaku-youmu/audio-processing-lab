@@ -2,8 +2,7 @@ close all
 clear
 clc
 
-load ../session1/Computed_RIRs.mat
-load ../session1/filtre_Hg.mat
+load filtre_Hg
 g = reshape(g, [], 5);
 
 fs_new = 8000;
@@ -22,9 +21,11 @@ h(1) = 1;
 
 y = OLA(speech1, h, nfft);
 
+% plot(y);
+
 %% Tester sur HRTF
-g_col = g(:);
-hrtf = reshape(H*g_col, [], 2);
+g = g(:);
+hrtf = reshape(H*g, [], 2);
 
 % Synthèse par convolution
 tic;
@@ -46,9 +47,8 @@ speech_ola_bin = [speech_ola_l, speech_ola_r];
 
 %% WOLA
 speech1_multichan = repmat(speech1, 1, 5);
-window = hann(nfft);
-[X, f] = WOLA_analysis(speech1_multichan, fs_new, window, nfft, 2, g);
-x_WOLA = WOLA_synthesis(X, window, nfft, 2);
+window = hamming(nfft);
+[X, f] = WOLA_analysis(speech1_multichan, fs_new, window, nfft, 2);
 
 J = size(RIR_sources, 3);
 

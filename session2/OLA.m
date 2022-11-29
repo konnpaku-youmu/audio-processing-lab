@@ -43,11 +43,11 @@ while istart <= nx
     % Section of code to complete (5 - 10 lines) %
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     if(istart+Lx-1 <= nx)
-        fin_x = istart+Lx-1;
+        eind_x = istart+Lx-1;
     else
-        fin_x = nx;
+        eind_x = nx;
     end
-    y(istart:istart+nfft-1) = y(istart:istart+nfft-1) + ifft(fft(x(istart:fin_x), nfft).*H, nfft);
+    y(istart:istart+nfft-1) = y(istart:istart+nfft-1) + ifft(fft(x(istart:eind_x), nfft).*H, nfft);
     istart = istart + Lx;
 end
 
